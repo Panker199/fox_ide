@@ -539,12 +539,13 @@ function SettingsPanel({ onBack, onNavigate }) {
           <div className="theme-grid">
             {installed.map(theme => {
               const isActive = activeThemeId === theme.id
-              const accent = theme.colors?.['--accent'] || '#58a6ff'
-              const bg1 = theme.colors?.['--bg-primary'] || '#1a1a1a'
-              const bg2 = theme.colors?.['--bg-secondary'] || '#2a2a2a'
-              const txt = theme.colors?.['--text-primary'] || '#ffffff'
-              const ok = theme.colors?.['--success'] || '#3fb950'
-              const warn = theme.colors?.['--warning'] || '#d29922'
+              const isLightTheme = theme.type === 'light'
+              const accent = theme.colors?.['--accent'] || (isLightTheme ? '#0969da' : '#58a6ff')
+              const bg1 = theme.colors?.['--bg-primary'] || (isLightTheme ? '#f8f8fc' : '#1a1a1a')
+              const bg2 = theme.colors?.['--bg-secondary'] || (isLightTheme ? '#ffffff' : '#2a2a2a')
+              const txt = theme.colors?.['--text-primary'] || (isLightTheme ? '#1f2328' : '#ffffff')
+              const ok = theme.colors?.['--success'] || (isLightTheme ? '#1a7f37' : '#3fb950')
+              const warn = theme.colors?.['--warning'] || (isLightTheme ? '#9a6700' : '#d29922')
 
               return (
                 <div key={theme.id} className={`theme-card-wrapper ${isActive ? 'active' : ''}`}>
