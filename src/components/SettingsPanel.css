@@ -227,6 +227,7 @@
 
 .settings-content {
   width: 100%;
+  max-width: 680px;
   padding-bottom: 40px;
 }
 
@@ -297,23 +298,22 @@
 }
 
 .setting-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--k-text-bright);
+  font-size: 12px;
+  color: var(--k-text-normal);
 }
 
 .setting-desc {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--k-text-ghost);
-  line-height: 1.4;
 }
 
 .group-label {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--k-text-bright);
-  margin-bottom: 12px;
-  letter-spacing: 0.2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--k-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
 }
 
 .group-label-row {
@@ -551,9 +551,9 @@
 }
 
 .theme-name {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--k-text-bright);
+  font-size: 11px;
+  color: var(--k-text-normal);
+  text-align: center;
 }
 
 .theme-card-wrapper {
@@ -751,9 +751,8 @@
 }
 
 .slider-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--k-text-bright);
+  font-size: 12px;
+  color: var(--k-text-normal);
 }
 
 .settings-slider-row {
@@ -825,9 +824,8 @@
 }
 
 .dropdown-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--k-text-bright);
+  font-size: 12px;
+  color: var(--k-text-normal);
 }
 
 .settings-select {
@@ -1000,15 +998,13 @@
 }
 
 .layout-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--k-text-bright);
+  font-size: 12px;
+  color: var(--k-text-normal);
 }
 
 .layout-desc {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--k-text-ghost);
-  line-height: 1.4;
 }
 
 /* About */
@@ -1370,19 +1366,16 @@
 }
 
 .settings-hero-title {
-  font-size: 28px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 600;
   color: var(--k-text-bright);
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-  line-height: 1.1;
+  margin-bottom: 4px;
 }
 
 .settings-hero-desc {
-  font-size: 14px;
-  color: var(--k-text-dim);
-  line-height: 1.6;
-  letter-spacing: 0.1px;
+  font-size: 13px;
+  color: var(--k-text-ghost);
+  line-height: 1.5;
 }
 
 .settings-search-box {
@@ -1460,9 +1453,8 @@
 }
 
 .feature-card-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--k-text-bright);
+  font-size: 13px;
+  color: var(--k-text-normal);
 }
 
 .feature-card-desc {
@@ -1475,8 +1467,7 @@
 .feature-card-btn {
   align-self: flex-start;
   padding: 5px 14px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
   color: var(--k-text-normal);
   background: var(--k-bg-raised);
   border: 1px solid var(--k-border-faint);

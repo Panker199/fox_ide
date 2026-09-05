@@ -402,7 +402,7 @@
 .git-status-M { color: #f0c000; }
 .git-status-A { color: #4ec9b0; }
 .git-status-D { color: #f14c4c; }
-.git-status-? { color: #888; }
+.git-status-\? { color: #888; }
 .git-status-R { color: #569cd6; }
 .git-status-C { color: #b5cea8; }
 
