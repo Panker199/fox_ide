@@ -1,5 +1,5 @@
 {
-  "name": "kro-ide",
+  "name": "fox-ide",
   "version": "1.0.0",
   "description": "Clean, minimalist glassmorphism IDE",
   "main": "electron/main.js",

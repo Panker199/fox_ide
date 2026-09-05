@@ -207,7 +207,7 @@ function TitleBar({ commandPaletteOpen, setCommandPaletteOpen, onOpenSettings, o
       <div className="titlebar-left">
         <div className="titlebar-brand">
           <Cpu size={16} className="brand-icon" />
-          <span className="brand-name">KRO</span>
+          <span className="brand-name">FOX</span>
           <span className="brand-tag">IDE</span>
         </div>
 

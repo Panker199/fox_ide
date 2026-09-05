@@ -82,7 +82,7 @@ function useThemeType() {
 }
 
 function defineThemes(monaco) {
-  monaco.editor.defineTheme('kro-dark', {
+  monaco.editor.defineTheme('fox-dark', {
     base: 'vs-dark',
     inherit: true,
     rules: [],
@@ -121,7 +121,7 @@ function defineThemes(monaco) {
     },
   })
 
-  monaco.editor.defineTheme('kro-light', {
+  monaco.editor.defineTheme('fox-light', {
     base: 'vs',
     inherit: true,
     rules: [],
@@ -197,7 +197,7 @@ function MonacoEditor({
 
   useEffect(() => {
     if (editorRef.current && monacoRef.current) {
-      const themeName = themeType === 'light' ? 'kro-light' : 'kro-dark'
+      const themeName = themeType === 'light' ? 'fox-light' : 'fox-dark'
       monacoRef.current.editor.setTheme(themeName)
     }
   }, [themeType])
@@ -208,7 +208,7 @@ function MonacoEditor({
 
     defineThemes(monaco)
 
-    const initialTheme = themeType === 'light' ? 'kro-light' : 'kro-dark'
+    const initialTheme = themeType === 'light' ? 'fox-light' : 'fox-dark'
     monaco.editor.setTheme(initialTheme)
 
     registerLanguageConfigs(monaco)
@@ -247,7 +247,7 @@ function MonacoEditor({
     if (onChange) onChange(value || '')
   }, [onChange])
 
-  const themeName = themeType === 'light' ? 'kro-light' : 'kro-dark'
+  const themeName = themeType === 'light' ? 'fox-light' : 'fox-dark'
 
   return (
     <div className={`monaco-editor-wrapper theme-${themeType}`} style={{ height }}>

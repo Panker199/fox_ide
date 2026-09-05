@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 
-const SETTINGS_KEY = 'kro-settings'
+const SETTINGS_KEY = 'fox-settings'
 
 const defaultSettings = {
   general: {

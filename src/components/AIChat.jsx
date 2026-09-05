@@ -109,7 +109,7 @@ function AIChat({ onBack }) {
             <div className="message-content">
               <div className="message-header">
                 <span className="message-role">
-                  {msg.role === 'assistant' ? 'KRO AI' : 'You'}
+                  {msg.role === 'assistant' ? 'FOX AI' : 'You'}
                 </span>
                 <span className="message-time">{msg.timestamp}</span>
               </div>

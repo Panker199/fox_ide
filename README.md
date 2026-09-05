@@ -1,4 +1,4 @@
-# KRO IDE
+# FOX IDE
 
 A VS Code-inspired code editor built with React, Monaco Editor, and Node.js backend.
 

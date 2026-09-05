@@ -130,14 +130,14 @@ export default function ThemeStudio({ onClose }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('kro-projects')
+      const saved = localStorage.getItem('fox-projects')
       if (saved) setProjects(JSON.parse(saved))
     } catch {}
   }, [])
 
   const saveProjects = (updated) => {
     setProjects(updated)
-    localStorage.setItem('kro-projects', JSON.stringify(updated))
+    localStorage.setItem('fox-projects', JSON.stringify(updated))
   }
 
   const createProject = () => {

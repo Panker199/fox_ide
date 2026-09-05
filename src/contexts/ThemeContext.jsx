@@ -201,7 +201,7 @@ const DEFAULT_SETTINGS = {
 export function ThemeProvider({ children }) {
   const [settings, setSettings] = useState(() => {
     try {
-      const saved = localStorage.getItem('kro-theme-settings')
+      const saved = localStorage.getItem('fox-theme-settings')
       return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : DEFAULT_SETTINGS
     } catch {
       return DEFAULT_SETTINGS
@@ -209,7 +209,7 @@ export function ThemeProvider({ children }) {
   })
 
   useEffect(() => {
-    localStorage.setItem('kro-theme-settings', JSON.stringify(settings))
+    localStorage.setItem('fox-theme-settings', JSON.stringify(settings))
     applyTheme(settings)
   }, [settings])
 

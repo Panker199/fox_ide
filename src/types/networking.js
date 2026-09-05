@@ -1,5 +1,5 @@
 /**
- * Networking and streaming type definitions for KRO IDE
+ * Networking and streaming type definitions for FOX IDE
  * Adapted from VS Code Copilot Chat extension (vscode-copilot-chat)
  * @see https://github.com/microsoft/vscode-copilot-chat
  */

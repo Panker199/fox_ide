@@ -38,7 +38,7 @@ function StartPage({ onOpenFile, onNavigate }) {
           <div className="hero-logo">
             <Cpu size={48} />
           </div>
-          <h1 className="hero-title">Welcome to KRO</h1>
+          <h1 className="hero-title">Welcome to FOX</h1>
           <p className="hero-subtitle">A clean, minimalist glassmorphism IDE</p>
           
           <div className="hero-search">

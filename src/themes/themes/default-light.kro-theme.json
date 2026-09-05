@@ -2,9 +2,9 @@
   "name": "Default Light",
   "id": "default-light",
   "type": "light",
-  "author": "KRO IDE",
+  "author": "FOX IDE",
   "version": "1.0.0",
-  "description": "Default light theme for KRO IDE",
+  "description": "Default light theme for FOX IDE",
   "colors": {
     "--bg-primary": "#ffffff",
     "--bg-secondary": "#f6f8fa",

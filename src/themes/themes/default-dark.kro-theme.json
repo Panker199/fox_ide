@@ -2,9 +2,9 @@
   "name": "Default Dark",
   "id": "default-dark",
   "type": "dark",
-  "author": "KRO IDE",
+  "author": "FOX IDE",
   "version": "1.0.0",
-  "description": "Default dark theme for KRO IDE",
+  "description": "Default dark theme for FOX IDE",
   "colors": {
     "--bg-primary": "#0d1117",
     "--bg-secondary": "#161b22",

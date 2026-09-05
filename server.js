@@ -6,7 +6,7 @@ const { execSync } = require('child_process')
 
 const app = express()
 const PORT = 3001
-const ROOT = path.resolve(process.env.KRO_ROOT || __dirname)
+const ROOT = path.resolve(process.env.FOX_ROOT || __dirname)
 
 app.use(cors())
 app.use(express.json({ limit: '10mb' }))
@@ -136,6 +136,6 @@ app.get('/api/git/status', (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`KRO server running on http://localhost:${PORT}`)
+  console.log(`FOX server running on http://localhost:${PORT}`)
   console.log(`Serving: ${ROOT}`)
 })

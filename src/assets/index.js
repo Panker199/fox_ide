@@ -1,4 +1,4 @@
-// KRO IDE Assets - Central export for easy imports
+// FOX IDE Assets - Central export for easy imports
 
 // App icons
 export { default as favicon } from '../assets/icons/favicon.svg'

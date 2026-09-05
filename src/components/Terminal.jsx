@@ -11,7 +11,7 @@ import {
 import './Terminal.css'
 
 const initialOutput = [
-  { type: 'system', text: 'KRO IDE Terminal v1.0.0' },
+  { type: 'system', text: 'FOX IDE Terminal v1.0.0' },
   { type: 'system', text: 'Type "help" for available commands' },
   { type: 'system', text: '' },
 ]

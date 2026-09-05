@@ -23,7 +23,7 @@ import './styles/global.css'
 import './styles/themes.css'
 import './styles/seti-icons.css'
 
-const STORAGE_KEY = 'kro-app-state'
+const STORAGE_KEY = 'fox-app-state'
 
 function loadState(key, fallback) {
   try {
@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     try { applySavedTheme() } catch(e) { console.error('Theme init error:', e) }
     try {
-      const saved = JSON.parse(localStorage.getItem('kro-settings') || '{}')
+      const saved = JSON.parse(localStorage.getItem('fox-settings') || '{}')
       const accent = saved?.appearance?.accentColor
       if (accent) {
         const root = document.documentElement

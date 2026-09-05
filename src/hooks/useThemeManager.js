@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 
-const STORAGE_KEY = 'kro-installed-themes'
-const ACTIVE_THEME_KEY = 'kro-active-theme'
+const STORAGE_KEY = 'fox-installed-themes'
+const ACTIVE_THEME_KEY = 'fox-active-theme'
 
 const themeFiles = import.meta.glob('../themes/themes/*.kro-theme.json', { eager: true })
 
@@ -26,8 +26,8 @@ function getAllThemesData() {
   try {
     const keys = Object.keys(localStorage)
     keys.forEach(key => {
-      if (key.startsWith('kro-theme-')) {
-        const themeId = key.replace('kro-theme-', '')
+      if (key.startsWith('fox-theme-')) {
+        const themeId = key.replace('fox-theme-', '')
         if (!BUILTIN_THEME_IDS.includes(themeId)) {
           try {
             const data = JSON.parse(localStorage.getItem(key))
@@ -53,7 +53,7 @@ function getAllThemesData() {
 
 export function applySavedTheme() {
   try {
-    const savedSettings = JSON.parse(localStorage.getItem('kro-settings') || '{}')
+    const savedSettings = JSON.parse(localStorage.getItem('fox-settings') || '{}')
     const savedThemeId = savedSettings?.appearance?.colorTheme || localStorage.getItem(ACTIVE_THEME_KEY) || 'default-dark'
     const isDark = savedSettings?.appearance?.isDarkMode
 
@@ -65,7 +65,7 @@ export function applySavedTheme() {
     let theme = builtinThemes[savedThemeId]
 
     if (!theme) {
-      const customThemeRaw = localStorage.getItem(`kro-theme-${savedThemeId}`)
+      const customThemeRaw = localStorage.getItem(`fox-theme-${savedThemeId}`)
       if (customThemeRaw) {
         const customTheme = JSON.parse(customThemeRaw)
         if (customTheme && customTheme.colors) {
@@ -152,7 +152,7 @@ export function useThemeManager(onThemeChange) {
 
   const [activeThemeId, setActiveThemeId] = useState(() => {
     try {
-      const savedSettings = JSON.parse(localStorage.getItem('kro-settings') || '{}')
+      const savedSettings = JSON.parse(localStorage.getItem('fox-settings') || '{}')
       return savedSettings?.appearance?.colorTheme || localStorage.getItem(ACTIVE_THEME_KEY) || 'default-dark'
     } catch {
       return 'default-dark'
@@ -258,7 +258,7 @@ export function useThemeManager(onThemeChange) {
     if (!themeData || !themeData.id || !themeData.colors || !themeData.name) return false
     if (BUILTIN_THEME_IDS.includes(themeData.id)) return false
 
-    localStorage.setItem(`kro-theme-${themeData.id}`, JSON.stringify(themeData))
+    localStorage.setItem(`fox-theme-${themeData.id}`, JSON.stringify(themeData))
 
     setInstalledThemeIds(prev => {
       if (prev.includes(themeData.id)) return prev
@@ -273,7 +273,7 @@ export function useThemeManager(onThemeChange) {
   const uninstallTheme = useCallback((themeId) => {
     if (BUILTIN_THEME_IDS.includes(themeId)) return false
 
-    localStorage.removeItem(`kro-theme-${themeId}`)
+    localStorage.removeItem(`fox-theme-${themeId}`)
     setInstalledThemeIds(prev => prev.filter(id => id !== themeId))
     refreshThemes()
 

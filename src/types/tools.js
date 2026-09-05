@@ -1,5 +1,5 @@
 /**
- * Tool system type definitions for KRO IDE
+ * Tool system type definitions for FOX IDE
  * Adapted from VS Code Copilot Chat extension (vscode-copilot-chat)
  * @see https://github.com/microsoft/vscode-copilot-chat
  */

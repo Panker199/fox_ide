@@ -3,7 +3,7 @@ import { useState, useCallback, useRef } from 'react'
 const WELCOME_MESSAGE = {
   id: 1,
   role: 'assistant',
-  content: `Welcome to **KRO Deep AI**.
+  content: `Welcome to **FOX Deep AI**.
 
 I behave like a Cursor-style pair programmer with Claude-level reasoning:
 - **Plan** the right solution before editing

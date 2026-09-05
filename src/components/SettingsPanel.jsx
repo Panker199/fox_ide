@@ -2978,7 +2978,7 @@ function SettingsPanel({ onBack, onNavigate }) {
     <div className="settings-content">
       <div className="settings-hero">
         <h2 className="settings-hero-title">About</h2>
-        <p className="settings-hero-desc">About KRO IDE.</p>
+        <p className="settings-hero-desc">About FOX IDE.</p>
       </div>
       
       <div className="settings-search-box">
@@ -2991,7 +2991,7 @@ function SettingsPanel({ onBack, onNavigate }) {
           <div className="about-logo">
             <Cpu size={48} />
           </div>
-          <h2 className="about-title">KRO IDE</h2>
+          <h2 className="about-title">FOX IDE</h2>
           <p className="about-version">Version 1.0.0</p>
           <p className="about-desc">Built with passion by Muneeb Alam — a developer who believes in clean code, powerful tools, and AI-driven workflows. Designed to make coding faster, smarter, and more enjoyable.</p>
         </div>

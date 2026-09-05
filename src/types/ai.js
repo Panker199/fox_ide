@@ -1,5 +1,5 @@
 /**
- * Core AI type definitions for KRO IDE
+ * Core AI type definitions for FOX IDE
  * Adapted from VS Code Copilot Chat extension (vscode-copilot-chat)
  * @see https://github.com/microsoft/vscode-copilot-chat
  */
