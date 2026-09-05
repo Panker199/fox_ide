@@ -2,6 +2,7 @@ node_modules/
 dist/
 *.txt
 .DS_Store
+.vs/
 assets/extensions/
 assets/svg/
 assets/fonts/
