@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">17.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>FOX IDE</Name>
+    <RootNamespace>fox-ide</RootNamespace>
+    <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
+    <StartupFile>src\main.jsx</StartupFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildProjectExtensionsPath Condition="'$(MSBuildProjectExtensionsPath)' == ''">$(VSToolsPath)\Node.js Tools\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildProjectExtensionsPath)\Microsoft.Node.jsTools.$(VisualStudioVersion).targets" Condition="Exists('$(MSBuildProjectExtensionsPath)\Microsoft.Node.jsTools.$(VisualStudioVersion).targets')" />
+  <ItemGroup>
+    <Content Include="src\**\*.jsx" />
+    <Content Include="src\**\*.js" />
+    <Content Include="src\**\*.css" />
+    <Content Include="src\**\*.json" />
+    <Content Include="*.html" />
+    <Content Include="package.json" />
+    <Content Include="vite.config.js" />
+    <Content Include="server.js" />
+  </ItemGroup>
+</Project>
