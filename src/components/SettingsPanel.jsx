@@ -285,6 +285,7 @@ function SettingsPanel({ onBack, onNavigate }) {
   } = useThemeManager(handleThemeChange)
 
   const fileInputRef = useRef(null)
+  const iconPackInputRef = useRef(null)
 
   useEffect(() => {
     const accent = settings.appearance?.accentColor
@@ -502,6 +503,36 @@ function SettingsPanel({ onBack, onNavigate }) {
       e.target.value = ''
     }
 
+    const handleIconPackImport = (e) => {
+      const file = e.target.files[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = (ev) => {
+          try {
+            const pack = JSON.parse(ev.target.result)
+            const id = pack.id || file.name.replace(/\.json$/, '')
+            const iconTheme = {
+              id,
+              name: pack.name || id,
+              type: pack.type || 'custom',
+              colors: pack.colors || ['#808080', '#606060', '#a0a0a0'],
+              icons: pack.icons || {},
+            }
+            const saved = JSON.parse(localStorage.getItem('fox-custom-icon-themes') || '[]')
+            if (!saved.find(t => t.id === id)) {
+              saved.push(iconTheme)
+              localStorage.setItem('fox-custom-icon-themes', JSON.stringify(saved))
+            }
+            updateSetting('appearance', 'iconTheme', id)
+          } catch (err) {
+            console.error('Failed to import icon pack:', err)
+          }
+        }
+        reader.readAsText(file)
+      }
+      e.target.value = ''
+    }
+
     return (
       <div className="settings-content">
         <div className="settings-hero">
@@ -695,10 +726,17 @@ function SettingsPanel({ onBack, onNavigate }) {
                 )}
               </div>
             ))}
-            <button className="theme-card-add" title="Import File Icon Pack">
+            <button className="theme-card-add" title="Import File Icon Pack" onClick={() => iconPackInputRef.current?.click()}>
               <Plus size={24} />
               <span>Add File Icon Pack</span>
             </button>
+            <input
+              ref={iconPackInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleIconPackImport}
+              style={{ display: 'none' }}
+            />
           </div>
         </div>
 
@@ -3099,25 +3137,23 @@ function SettingsPanel({ onBack, onNavigate }) {
         </div>
       </div>
 
-      <div className="settings-body">
-        <nav className="settings-nav">
-          <div className="settings-nav-list">
-            {settingsSections.map(section => (
-              <button
-                key={section.id}
-                className={`nav-item ${activeSection === section.id ? 'active' : ''}`}
-                onClick={() => setActiveSection(section.id)}
-              >
-                <section.icon size={16} />
-                <span>{section.label}</span>
-              </button>
-            ))}
-          </div>
-        </nav>
-
-        <div className="settings-main">
-          {renderContent()}
+      <div className="settings-tabs-scroll">
+        <div className="settings-tabs">
+          {settingsSections.map(section => (
+            <button
+              key={section.id}
+              className={`settings-tab ${activeSection === section.id ? 'active' : ''}`}
+              onClick={() => setActiveSection(section.id)}
+            >
+              <section.icon size={14} />
+              <span>{section.label}</span>
+            </button>
+          ))}
         </div>
+      </div>
+
+      <div className="settings-main">
+        {renderContent()}
       </div>
     </div>
   )
