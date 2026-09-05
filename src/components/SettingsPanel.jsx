@@ -3,7 +3,6 @@ import {
   Settings,
   Palette,
   Code2,
-  Search,
   Keyboard,
   Shield,
   Bell,
@@ -259,7 +258,6 @@ function Dropdown({ label, value, options, onChange }) {
 
 function SettingsPanel({ onBack, onNavigate }) {
   const [activeSection, setActiveSection] = useState('general')
-  const [navSearch, setNavSearch] = useState('')
   const { settings, saving, saved, updateSetting, updateSettings, resetSettings, getSetting } = useSettings()
 
   const handleThemeChange = useCallback((themeId, themeType) => {
@@ -310,11 +308,6 @@ function SettingsPanel({ onBack, onNavigate }) {
       <div className="settings-hero">
         <h2 className="settings-hero-title">General</h2>
         <p className="settings-hero-desc">Configure general IDE behavior and file handling preferences.</p>
-      </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings (e.g. 'auto save')" />
       </div>
       
       <div className="setting-group">
@@ -539,11 +532,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <div className="settings-hero">
           <h2 className="settings-hero-title">Appearance</h2>
           <p className="settings-hero-desc">Customize the look and feel of your IDE. Choose themes, icons, fonts, and layout.</p>
-        </div>
-        
-        <div className="settings-search-box">
-          <Search size={16} />
-          <input type="text" placeholder="Search settings (e.g. 'theme', 'font')" />
         </div>
 
         <div className="setting-group">
@@ -879,11 +867,6 @@ function SettingsPanel({ onBack, onNavigate }) {
       <div className="settings-hero">
         <h2 className="settings-hero-title">Editor</h2>
         <p className="settings-hero-desc">Configure editor behavior, cursor, font, indentation, and code editing features.</p>
-      </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings (e.g. 'font size', 'tab')" />
       </div>
       
       <div className="setting-group">
@@ -1296,11 +1279,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <p className="settings-hero-desc">Configure the integrated terminal shell, font, cursor, and behavior.</p>
       </div>
       
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings (e.g. 'shell', 'font')" />
-      </div>
-      
       <div className="setting-group">
         <Dropdown
           label="Shell"
@@ -1435,11 +1413,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <p className="settings-hero-desc">Configure Git integration, commit behavior, and version control features.</p>
       </div>
       
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings (e.g. 'commit', 'branch')" />
-      </div>
-      
       <div className="setting-group">
         <div className="setting-item">
           <div className="setting-info">
@@ -1543,11 +1516,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <p className="settings-hero-desc">Configure debugging options and breakpoints.</p>
       </div>
       
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
-      
       <div className="setting-group">
         <div className="setting-item">
           <div className="setting-info">
@@ -1618,11 +1586,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <p className="settings-hero-desc">Manage and configure your installed extensions.</p>
       </div>
       
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
-      
       <div className="setting-group">
         <div className="setting-item">
           <div className="setting-info">
@@ -1681,11 +1644,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <h2 className="settings-hero-title">Security</h2>
         <p className="settings-hero-desc">Configure security settings and permissions.</p>
       </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
 
       <div className="setting-group">
         <div className="setting-item">
@@ -1727,11 +1685,6 @@ function SettingsPanel({ onBack, onNavigate }) {
       <div className="settings-hero">
         <h2 className="settings-hero-title">Notifications</h2>
         <p className="settings-hero-desc">Configure notification preferences and alerts.</p>
-      </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
       </div>
 
       <div className="setting-group">
@@ -1775,11 +1728,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <h2 className="settings-hero-title">Language & Region</h2>
         <p className="settings-hero-desc">Set your preferred display language and regional formats.</p>
       </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
 
       <div className="setting-group">
         <Dropdown
@@ -1797,11 +1745,6 @@ function SettingsPanel({ onBack, onNavigate }) {
       <div className="settings-hero">
         <h2 className="settings-hero-title">Accessibility</h2>
         <p className="settings-hero-desc">Configure accessibility features for a better experience.</p>
-      </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
       </div>
 
       <div className="setting-group">
@@ -1916,11 +1859,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <h2 className="settings-hero-title">Workspace</h2>
         <p className="settings-hero-desc">Configure workspace-specific settings and folders.</p>
       </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
 
       <div className="setting-group">
         <div className="setting-item">
@@ -2019,11 +1957,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <h2 className="settings-hero-title">Keyboard Shortcuts</h2>
         <p className="settings-hero-desc">View and customize keyboard shortcuts.</p>
       </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
 
       <div className="shortcuts-list">
         {[
@@ -2066,11 +1999,6 @@ function SettingsPanel({ onBack, onNavigate }) {
       <div className="settings-hero">
         <h2 className="settings-hero-title">Breadcrumb</h2>
         <p className="settings-hero-desc">Configure breadcrumb navigation in the editor.</p>
-      </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
       </div>
 
       <div className="setting-group">
@@ -2162,11 +2090,6 @@ function SettingsPanel({ onBack, onNavigate }) {
       <div className="settings-hero">
         <h2 className="settings-hero-title">Status Bar</h2>
         <p className="settings-hero-desc">Customize the status bar visibility and items.</p>
-      </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
       </div>
 
       <div className="setting-group">
@@ -2290,11 +2213,6 @@ function SettingsPanel({ onBack, onNavigate }) {
       <div className="settings-hero">
         <h2 className="settings-hero-title">AI Fusion</h2>
         <p className="settings-hero-desc">Configure AI-powered code assistance and suggestions.</p>
-      </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
       </div>
 
       <div className="setting-group">
@@ -2491,11 +2409,6 @@ function SettingsPanel({ onBack, onNavigate }) {
       <div className="settings-hero">
         <h2 className="settings-hero-title">Copilot</h2>
         <p className="settings-hero-desc">Configure GitHub Copilot integration.</p>
-      </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
       </div>
 
       <div className="setting-group">
@@ -2757,11 +2670,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <h2 className="settings-hero-title">Network</h2>
         <p className="settings-hero-desc">Configure network proxy and connection settings.</p>
       </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
 
       <div className="setting-group">
         <div className="setting-item">
@@ -2895,11 +2803,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <h2 className="settings-hero-title">Performance</h2>
         <p className="settings-hero-desc">Optimize performance and resource usage.</p>
       </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
 
       <div className="setting-group">
         <div className="setting-item">
@@ -3018,11 +2921,6 @@ function SettingsPanel({ onBack, onNavigate }) {
         <h2 className="settings-hero-title">About</h2>
         <p className="settings-hero-desc">About FOX IDE.</p>
       </div>
-      
-      <div className="settings-search-box">
-        <Search size={16} />
-        <input type="text" placeholder="Search settings..." />
-      </div>
 
       <div className="setting-group">
         <div className="about-card">
@@ -3140,19 +3038,8 @@ function SettingsPanel({ onBack, onNavigate }) {
 
       <div className="settings-body">
         <nav className="settings-nav">
-          <div className="settings-search">
-            <Search size={14} className="settings-search-icon" />
-            <input
-              type="text"
-              className="settings-search-input"
-              placeholder="Search..."
-              value={navSearch}
-              onChange={(e) => setNavSearch(e.target.value)}
-            />
-          </div>
           <div className="settings-nav-list">
             {settingsSections
-              .filter(s => s.label.toLowerCase().includes(navSearch.toLowerCase()))
               .map(section => (
                 <button
                   key={section.id}

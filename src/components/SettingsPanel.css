@@ -93,82 +93,6 @@
   gap: 2px;
 }
 
-/* Search */
-.settings-search {
-  position: relative;
-  margin-bottom: 8px;
-  padding: 0;
-}
-
-.settings-search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--k-text-ghost);
-  pointer-events: none;
-  width: 14px;
-  height: 14px;
-}
-
-.settings-search-input {
-  width: 100%;
-  padding: 6px 10px 6px 28px;
-  background: var(--k-bg-raised);
-  border: 1px solid var(--k-border-faint);
-  border-radius: var(--k-r-sm);
-  color: var(--k-text-normal);
-  font-size: 12px;
-  outline: none;
-  transition: border-color 0.15s ease;
-}
-
-.settings-search-input::placeholder {
-  color: var(--k-text-ghost);
-}
-
-.settings-search-input:focus {
-  border-color: var(--k-accent);
-}
-
-/* Search */
-.settings-search {
-  position: relative;
-  margin-bottom: 8px;
-  padding: 0;
-}
-
-.settings-search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--k-text-ghost);
-  pointer-events: none;
-  width: 14px;
-  height: 14px;
-}
-
-.settings-search-input {
-  width: 100%;
-  padding: 6px 10px 6px 28px;
-  background: var(--k-bg-raised);
-  border: 1px solid var(--k-border-faint);
-  border-radius: var(--k-r-sm);
-  color: var(--k-text-normal);
-  font-size: 12px;
-  outline: none;
-  transition: border-color 0.15s ease;
-}
-
-.settings-search-input::placeholder {
-  color: var(--k-text-ghost);
-}
-
-.settings-search-input:focus {
-  border-color: var(--k-accent);
-}
-
 /* Nav Items */
 .nav-item {
   display: flex;
@@ -1376,43 +1300,6 @@
   font-size: 13px;
   color: var(--k-text-ghost);
   line-height: 1.5;
-}
-
-.settings-search-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  margin-bottom: 24px;
-  background: var(--k-bg-surface);
-  border: 1px solid var(--k-border-faint);
-  border-radius: 20px;
-  transition: border-color 0.2s ease;
-}
-
-.settings-search-box:focus-within {
-  border-color: var(--k-accent);
-}
-
-.settings-search-box svg {
-  color: var(--k-text-ghost);
-  flex-shrink: 0;
-}
-
-.settings-search-box input {
-  flex: 1;
-  background: none;
-  border: none;
-  color: var(--k-text-normal);
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.1px;
-  outline: none;
-}
-
-.settings-search-box input::placeholder {
-  color: var(--k-text-ghost);
-  font-weight: 400;
 }
 
 .feature-grid {
