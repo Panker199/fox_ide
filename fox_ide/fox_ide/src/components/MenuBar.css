@@ -1,0 +1,95 @@
+.menu-bar {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  background: var(--k-bg-surface);
+  border-bottom: 1px solid var(--k-border-faint);
+  padding: 0 8px;
+  user-select: none;
+}
+
+.menu-items {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.menu-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 8px;
+  color: var(--k-text-bright);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.menu-item.active {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.menu-label {
+  font-size: 12px;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 500px;
+  background: var(--k-bg-float);
+  border: 1px solid var(--k-border-faint);
+  border-radius: 6px;
+  padding: 4px 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.menu-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 6px 20px;
+  background: transparent;
+  color: var(--k-text-bright);
+  font-size: 12px;
+  text-align: left;
+}
+
+.menu-dropdown-item:hover {
+  background: var(--k-accent);
+  color: white;
+}
+
+.menu-dropdown-item svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.item-label {
+  flex: 1;
+}
+
+.item-shortcut {
+  color: var(--k-text-ghost);
+  font-size: 11px;
+  margin-left: auto;
+  padding-left: 20px;
+}
+
+.menu-dropdown-item:hover .item-shortcut {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.menu-separator {
+  height: 1px;
+  background: var(--k-border-faint);
+  margin: 4px 0;
+}

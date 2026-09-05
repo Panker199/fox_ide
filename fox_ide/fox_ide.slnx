@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="fox_ide/fox_ide.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>

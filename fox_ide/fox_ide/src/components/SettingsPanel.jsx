@@ -139,6 +139,7 @@ import {
   ScanLine,
   Shell
 } from 'lucide-react'
+import { getFileIcon } from '../themes/fileIcons'
 import { useThemeManager } from '../hooks/useThemeManager'
 import { useSettings } from '../hooks/useSettings'
 import { SaveIndicator } from './Spinner'
@@ -857,7 +858,7 @@ function SettingsPanel({ onBack, onNavigate }) {
               onClick={() => updateSetting('editor', 'cursorStyle', style)}
             >
               <span>{style}</span>
-              {settings.editor?.cursorStyle === style && <Check size={14} />}
+              {settings.cursorStyle === style && <Check size={14} />}
             </button>
           ))}
         </div>
@@ -1163,7 +1164,7 @@ function SettingsPanel({ onBack, onNavigate }) {
               onClick={() => updateSetting('editor', 'renderLineHighlight', mode)}
             >
               <span>{mode.charAt(0).toUpperCase() + mode.slice(1)}</span>
-              {settings.editor?.renderLineHighlight === mode && <Check size={14} />}
+              {settings.renderLineHighlight === mode && <Check size={14} />}
             </button>
           ))}
         </div>
@@ -1179,7 +1180,7 @@ function SettingsPanel({ onBack, onNavigate }) {
               onClick={() => updateSetting('editor', 'multiCursorModifier', mod)}
             >
               <span>{mod.toUpperCase()}</span>
-              {settings.editor?.multiCursorModifier === mod && <Check size={14} />}
+              {settings.multiCursorModifier === mod && <Check size={14} />}
             </button>
           ))}
         </div>

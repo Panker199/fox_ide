@@ -1,0 +1,75 @@
+.spinner-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  animation: spinner-rotate 1.4s linear infinite;
+}
+
+.spinner-track {
+  stroke: var(--k-border-faint);
+  opacity: 0.3;
+}
+
+.spinner-head {
+  stroke-dasharray: 80, 200;
+  stroke-dashoffset: 0;
+  animation: spinner-dash 1.4s ease-in-out infinite;
+}
+
+@keyframes spinner-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 80, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 80, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+.save-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--k-r-sm);
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+.save-indicator.saving {
+  background: var(--k-accent-ghost);
+  color: var(--k-accent);
+}
+
+.save-indicator.saved {
+  background: var(--k-green-bg);
+  color: var(--k-green);
+}
+
+.save-text {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.save-text.saved {
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

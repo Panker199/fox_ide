@@ -1,0 +1,52 @@
+.monaco-editor-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.monaco-editor-wrapper.theme-dark {
+  background: #0d1117;
+}
+
+.monaco-editor-wrapper.theme-light {
+  background: #ffffff;
+}
+
+.monaco-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  color: #484f58;
+  font-size: 13px;
+}
+
+.monaco-loading.theme-dark {
+  background: #0d1117;
+  color: #e6edf3;
+}
+
+.monaco-loading.theme-light {
+  background: #ffffff;
+  color: #24292e;
+}
+
+.monaco-loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #30363d;
+  border-top-color: #58a6ff;
+  border-radius: 50%;
+  animation: monaco-spin 0.8s linear infinite;
+}
+
+.theme-light .monaco-loading-spinner {
+  border-color: #e1e4e8;
+  border-top-color: #0366d6;
+}
+
+@keyframes monaco-spin {
+  to { transform: rotate(360deg); }
+}
