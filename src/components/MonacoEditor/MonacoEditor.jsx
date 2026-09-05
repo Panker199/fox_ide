@@ -206,13 +206,13 @@ function MonacoEditor({
     editorRef.current = editor
     monacoRef.current = monaco
 
-    defineThemes(monaco)
+    try { defineThemes(monaco) } catch (e) { console.warn('Theme define error:', e) }
 
     const initialTheme = themeType === 'light' ? 'fox-light' : 'fox-dark'
-    monaco.editor.setTheme(initialTheme)
+    try { monaco.editor.setTheme(initialTheme) } catch (e) { console.warn('Theme set error:', e) }
 
-    registerLanguageConfigs(monaco)
-    registerSnippets(monaco)
+    try { registerLanguageConfigs(monaco) } catch (e) { console.warn('Language config error:', e) }
+    try { registerSnippets(monaco) } catch (e) { console.warn('Snippet error:', e) }
 
     editor.updateOptions({
       minimap: { enabled: minimap },
