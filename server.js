@@ -13,6 +13,12 @@ app.use(express.json({ limit: '10mb' }))
 
 const IGNORE = ['node_modules', '.git', 'dist', '.next', '.nuxt', '.cache', '.vite', 'out']
 
+function safePath(filePath) {
+  const full = path.resolve(ROOT, filePath)
+  if (!full.startsWith(ROOT)) return null
+  return full
+}
+
 function buildTree(dirPath, depth = 0, maxDepth = 20) {
   if (depth > maxDepth) return []
   const entries = []
@@ -55,21 +61,25 @@ app.get('/api/tree', (req, res) => {
 app.get('/api/file', (req, res) => {
   const filePath = req.query.path
   if (!filePath) return res.status(400).json({ error: 'No path' })
-  const full = path.join(ROOT, filePath)
+  const full = safePath(filePath)
+  if (!full) return res.status(403).json({ error: 'Access denied' })
   try {
+    if (!fs.existsSync(full)) return res.status(404).json({ error: 'File not found' })
     const stat = fs.statSync(full)
+    if (stat.isDirectory()) return res.status(400).json({ error: 'Is a directory' })
     if (stat.size > 5 * 1024 * 1024) return res.status(413).json({ error: 'File too large' })
     const content = fs.readFileSync(full, 'utf-8')
     res.json({ content, path: filePath })
   } catch (e) {
-    res.status(404).json({ error: e.message })
+    res.status(500).json({ error: e.message })
   }
 })
 
 app.put('/api/file', (req, res) => {
   const { filePath, content } = req.body
   if (!filePath) return res.status(400).json({ error: 'No path' })
-  const full = path.join(ROOT, filePath)
+  const full = safePath(filePath)
+  if (!full) return res.status(403).json({ error: 'Access denied' })
   try {
     fs.mkdirSync(path.dirname(full), { recursive: true })
     fs.writeFileSync(full, content, 'utf-8')
@@ -82,7 +92,8 @@ app.put('/api/file', (req, res) => {
 app.post('/api/file/new', (req, res) => {
   const { filePath } = req.body
   if (!filePath) return res.status(400).json({ error: 'No path' })
-  const full = path.join(ROOT, filePath)
+  const full = safePath(filePath)
+  if (!full) return res.status(403).json({ error: 'Access denied' })
   try {
     fs.mkdirSync(path.dirname(full), { recursive: true })
     if (!fs.existsSync(full)) fs.writeFileSync(full, '', 'utf-8')
@@ -95,8 +106,10 @@ app.post('/api/file/new', (req, res) => {
 app.delete('/api/file', (req, res) => {
   const filePath = req.query.path
   if (!filePath) return res.status(400).json({ error: 'No path' })
-  const full = path.join(ROOT, filePath)
+  const full = safePath(filePath)
+  if (!full) return res.status(403).json({ error: 'Access denied' })
   try {
+    if (!fs.existsSync(full)) return res.status(404).json({ error: 'Not found' })
     const stat = fs.statSync(full)
     if (stat.isDirectory()) {
       fs.rmSync(full, { recursive: true })
@@ -112,9 +125,27 @@ app.delete('/api/file', (req, res) => {
 app.post('/api/folder/new', (req, res) => {
   const { folderPath } = req.body
   if (!folderPath) return res.status(400).json({ error: 'No path' })
-  const full = path.join(ROOT, folderPath)
+  const full = safePath(folderPath)
+  if (!full) return res.status(403).json({ error: 'Access denied' })
   try {
     fs.mkdirSync(full, { recursive: true })
+    res.json({ ok: true })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+app.post('/api/rename', (req, res) => {
+  const { oldPath, newPath } = req.body
+  if (!oldPath || !newPath) return res.status(400).json({ error: 'oldPath and newPath required' })
+  const fullOld = safePath(oldPath)
+  const fullNew = safePath(newPath)
+  if (!fullOld || !fullNew) return res.status(403).json({ error: 'Access denied' })
+  try {
+    if (!fs.existsSync(fullOld)) return res.status(404).json({ error: 'Source not found' })
+    if (fs.existsSync(fullNew)) return res.status(409).json({ error: 'Destination already exists' })
+    fs.mkdirSync(path.dirname(fullNew), { recursive: true })
+    fs.renameSync(fullOld, fullNew)
     res.json({ ok: true })
   } catch (e) {
     res.status(500).json({ error: e.message })

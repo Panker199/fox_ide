@@ -123,14 +123,17 @@ function App() {
     handlePanelChange(commandId)
   }, [])
 
-  const handleMenuAction = useCallback((action) => {
+  const handleMenuAction = useCallback(async (action) => {
     if (action === 'commandPalette') {
       setCommandPaletteOpen(true)
     } else if (action === 'openSettings') {
       setActivePanel('settings')
     } else if (action === 'file.newFile') {
       const name = prompt('File name:', 'new-file.js')
-      if (name) { fs.createFile(name); handleFileOpen(name) }
+      if (name && name.trim()) {
+        const ok = await fs.createFile(name.trim())
+        if (ok) handleFileOpen(name.trim())
+      }
     } else if (action === 'file.save') {
       if (fs.activeFile && fs.fileContents[fs.activeFile] !== undefined) {
         fs.saveFile(fs.activeFile, fs.fileContents[fs.activeFile])

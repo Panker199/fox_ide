@@ -10,15 +10,21 @@ export function useFileSystem() {
   const [openFiles, setOpenFiles] = useState([])
   const [activeFile, setActiveFile] = useState(null)
   const [fileContents, setFileContents] = useState({})
-  const fetchRef = useRef(null)
+  const fileContentsRef = useRef(fileContents)
+  fileContentsRef.current = fileContents
 
   const fetchTree = useCallback(async () => {
     try {
       setLoading(true)
       const res = await fetch(`${API}/tree`)
+      if (!res.ok) throw new Error(`Server error ${res.status}`)
       const data = await res.json()
-      setTree(data)
-      setError(null)
+      if (Array.isArray(data)) {
+        setTree(data)
+        setError(null)
+      } else {
+        throw new Error(data.error || 'Invalid response')
+      }
     } catch (e) {
       setError(e.message)
     } finally {
@@ -27,11 +33,13 @@ export function useFileSystem() {
   }, [])
 
   const fetchFile = useCallback(async (filePath) => {
-    if (fileContents[filePath] !== undefined) return fileContents[filePath]
+    const cached = fileContentsRef.current[filePath]
+    if (cached !== undefined) return cached
     try {
       const res = await fetch(`${API}/file?path=${encodeURIComponent(filePath)}`)
+      if (!res.ok) throw new Error(`Failed to read file`)
       const data = await res.json()
-      if (res.ok) {
+      if (data.content !== undefined) {
         setFileContents(prev => ({ ...prev, [filePath]: data.content }))
         return data.content
       }
@@ -39,7 +47,11 @@ export function useFileSystem() {
     } catch (e) {
       return null
     }
-  }, [fileContents])
+  }, [])
+
+  const updateFileContent = useCallback((filePath, content) => {
+    setFileContents(prev => ({ ...prev, [filePath]: content }))
+  }, [])
 
   const saveFile = useCallback(async (filePath, content) => {
     try {
@@ -72,22 +84,29 @@ export function useFileSystem() {
   const closeFile = useCallback((filePath) => {
     setOpenFiles(prev => {
       const next = prev.filter(f => f !== filePath)
-      if (activeFile === filePath) {
-        const idx = prev.indexOf(filePath)
-        const newActive = next[Math.min(idx, next.length - 1)] || null
-        setActiveFile(newActive)
-      }
       return next
     })
-  }, [activeFile])
+    setActiveFile(prev => {
+      if (prev !== filePath) return prev
+      setOpenFiles(currentOpen => {
+        const idx = currentOpen.indexOf(filePath)
+        const remaining = currentOpen.filter(f => f !== filePath)
+        const newActive = remaining[Math.min(idx, remaining.length - 1)] || null
+        setTimeout(() => setActiveFile(newActive), 0)
+        return remaining
+      })
+      return prev
+    })
+  }, [])
 
   const createFile = useCallback(async (filePath) => {
     try {
-      await fetch(`${API}/file/new`, {
+      const res = await fetch(`${API}/file/new`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filePath }),
       })
+      if (!res.ok) throw new Error('Failed to create file')
       await fetchTree()
       return true
     } catch (e) {
@@ -97,7 +116,8 @@ export function useFileSystem() {
 
   const deleteFile = useCallback(async (filePath) => {
     try {
-      await fetch(`${API}/file?path=${encodeURIComponent(filePath)}`, { method: 'DELETE' })
+      const res = await fetch(`${API}/file?path=${encodeURIComponent(filePath)}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Failed to delete')
       closeFile(filePath)
       await fetchTree()
       return true
@@ -108,11 +128,12 @@ export function useFileSystem() {
 
   const createFolder = useCallback(async (folderPath) => {
     try {
-      await fetch(`${API}/folder/new`, {
+      const res = await fetch(`${API}/folder/new`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ folderPath }),
       })
+      if (!res.ok) throw new Error('Failed to create folder')
       await fetchTree()
       return true
     } catch (e) {
@@ -122,10 +143,21 @@ export function useFileSystem() {
 
   const renameFile = useCallback(async (oldPath, newPath) => {
     try {
-      await fetch(`${API}/rename`, {
+      const res = await fetch(`${API}/rename`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ oldPath, newPath }),
+      })
+      if (!res.ok) throw new Error('Failed to rename')
+      setOpenFiles(prev => prev.map(f => f === oldPath ? newPath : f))
+      setActiveFile(prev => prev === oldPath ? newPath : prev)
+      setFileContents(prev => {
+        const next = { ...prev }
+        if (next[oldPath] !== undefined) {
+          next[newPath] = next[oldPath]
+          delete next[oldPath]
+        }
+        return next
       })
       await fetchTree()
       return true
@@ -146,7 +178,9 @@ export function useFileSystem() {
     if (!query) return []
     try {
       const res = await fetch(`${API}/tree`)
+      if (!res.ok) return []
       const data = await res.json()
+      if (!Array.isArray(data)) return []
       const results = []
       const search = (items) => {
         for (const item of items) {
@@ -173,7 +207,7 @@ export function useFileSystem() {
   return {
     tree, loading, error,
     openFiles, activeFile, fileContents,
-    openFile, closeFile, setActiveFile,
+    openFile, closeFile, setActiveFile, updateFileContent,
     fetchFile, saveFile, createFile, deleteFile, createFolder, renameFile,
     fetchTree, fetchGitStatus, gitStatus, searchFiles,
   }

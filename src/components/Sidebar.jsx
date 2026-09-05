@@ -1,11 +1,10 @@
-import React, { useState, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import {
   FolderOpen,
   Folder,
   Search,
   GitBranch,
   Plus,
-  MoreHorizontal,
   ChevronDown,
   ChevronRight,
   Blocks,
@@ -52,13 +51,29 @@ function SetiIcon({ filename, isFolder, expanded }) {
   return <span className={`seti-icon ${iconType ? '' : 'seti-icon--default'}`} data-icon={iconType || 'default'} style={{ flexShrink: 0, fontSize: '14px', lineHeight: 1 }} />
 }
 
-function FileTreeItem({ item, depth = 0, onFileOpen, expandedPaths, toggleExpand, activeFile, onNewFile, onNewFolder, onDelete }) {
+function FileTreeItem({ item, depth = 0, onFileOpen, expandedPaths, toggleExpand, activeFile, onNewFile, onNewFolder, onDelete, onRename }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [menuPos, setMenuPos] = useState({ x: 0, y: 0 })
   const [renaming, setRenaming] = useState(false)
   const [newName, setNewName] = useState(item.name)
+  const inputRef = useRef(null)
   const isFolder = item.type === 'folder'
   const isExpanded = expandedPaths.has(item.path)
   const isActive = item.type === 'file' && activeFile === item.path
+
+  useEffect(() => {
+    if (renaming && inputRef.current) {
+      inputRef.current.focus()
+      inputRef.current.select()
+    }
+  }, [renaming])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const close = () => setMenuOpen(false)
+    document.addEventListener('click', close)
+    return () => document.removeEventListener('click', close)
+  }, [menuOpen])
 
   const handleClick = () => {
     if (isFolder) {
@@ -70,7 +85,19 @@ function FileTreeItem({ item, depth = 0, onFileOpen, expandedPaths, toggleExpand
 
   const handleContextMenu = (e) => {
     e.preventDefault()
+    e.stopPropagation()
+    setMenuPos({ x: e.clientX, y: e.clientY })
     setMenuOpen(true)
+  }
+
+  const handleRenameSubmit = () => {
+    const trimmed = newName.trim()
+    if (trimmed && trimmed !== item.name) {
+      const parentDir = item.path.substring(0, item.path.lastIndexOf('/'))
+      const newPath = parentDir ? `${parentDir}/${trimmed}` : trimmed
+      onRename(item.path, newPath)
+    }
+    setRenaming(false)
   }
 
   return (
@@ -86,17 +113,31 @@ function FileTreeItem({ item, depth = 0, onFileOpen, expandedPaths, toggleExpand
         ) : (
           <SetiIcon filename={item.name} isFolder={false} />
         )}
-        <span className="tree-name">{item.name}</span>
+        {renaming ? (
+          <input
+            ref={inputRef}
+            className="tree-rename-input"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            onBlur={handleRenameSubmit}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleRenameSubmit()
+              if (e.key === 'Escape') setRenaming(false)
+            }}
+            onClick={(e) => e.stopPropagation()}
+          />
+        ) : (
+          <span className="tree-name">{item.name}</span>
+        )}
       </div>
       {menuOpen && (
-        <div className="tree-context-menu" style={{ position: 'fixed', left: '100px', top: '100px', zIndex: 9999 }}>
+        <div className="tree-context-menu" style={{ position: 'fixed', left: menuPos.x, top: menuPos.y, zIndex: 9999 }}>
           {isFolder && <>
-            <button onClick={() => { onNewFile(item.path); setMenuOpen(false) }}>New File</button>
-            <button onClick={() => { onNewFolder(item.path); setMenuOpen(false) }}>New Folder</button>
+            <button onClick={(e) => { e.stopPropagation(); onNewFile(item.path); setMenuOpen(false) }}>New File</button>
+            <button onClick={(e) => { e.stopPropagation(); onNewFolder(item.path); setMenuOpen(false) }}>New Folder</button>
           </>}
-          <button onClick={() => { setRenaming(true); setMenuOpen(false) }}>Rename</button>
-          <button className="danger" onClick={() => { onDelete(item.path); setMenuOpen(false) }}>Delete</button>
-          <button onClick={() => setMenuOpen(false)}>Cancel</button>
+          <button onClick={(e) => { e.stopPropagation(); setRenaming(true); setMenuOpen(false) }}>Rename</button>
+          <button className="danger" onClick={(e) => { e.stopPropagation(); onDelete(item.path); setMenuOpen(false) }}>Delete</button>
         </div>
       )}
       {isFolder && isExpanded && item.children && (
@@ -113,6 +154,7 @@ function FileTreeItem({ item, depth = 0, onFileOpen, expandedPaths, toggleExpand
               onNewFile={onNewFile}
               onNewFolder={onNewFolder}
               onDelete={onDelete}
+              onRename={onRename}
             />
           ))}
         </div>
@@ -129,6 +171,16 @@ function Sidebar({ activePanel, onPanelChange, fs, onFileOpen }) {
     fs.tree.forEach(item => { if (item.type === 'folder') s.add(item.path) })
     return s
   })
+
+  useEffect(() => {
+    if (fs.tree.length > 0) {
+      setExpandedPaths(prev => {
+        const next = new Set(prev)
+        fs.tree.forEach(item => { if (item.type === 'folder') next.add(item.path) })
+        return next
+      })
+    }
+  }, [fs.tree])
 
   const toggleExpand = useCallback((path) => {
     setExpandedPaths(prev => {
@@ -148,19 +200,19 @@ function Sidebar({ activePanel, onPanelChange, fs, onFileOpen }) {
 
   const handleNewFile = useCallback(async (dirPath) => {
     const name = prompt('File name:', 'new-file.js')
-    if (name) {
-      const filePath = dirPath ? `${dirPath}/${name}` : name
-      await fs.createFile(filePath)
-      setExpandedPaths(prev => new Set([...prev, dirPath]))
+    if (name && name.trim()) {
+      const filePath = dirPath ? `${dirPath}/${name.trim()}` : name.trim()
+      const ok = await fs.createFile(filePath)
+      if (ok) setExpandedPaths(prev => new Set([...prev, dirPath]))
     }
   }, [fs])
 
   const handleNewFolder = useCallback(async (dirPath) => {
     const name = prompt('Folder name:', 'new-folder')
-    if (name) {
-      const folderPath = dirPath ? `${dirPath}/${name}` : name
-      await fs.createFolder(folderPath)
-      setExpandedPaths(prev => new Set([...prev, dirPath]))
+    if (name && name.trim()) {
+      const folderPath = dirPath ? `${dirPath}/${name.trim()}` : name.trim()
+      const ok = await fs.createFolder(folderPath)
+      if (ok) setExpandedPaths(prev => new Set([...prev, dirPath]))
     }
   }, [fs])
 
@@ -168,6 +220,10 @@ function Sidebar({ activePanel, onPanelChange, fs, onFileOpen }) {
     if (confirm(`Delete ${filePath}?`)) {
       await fs.deleteFile(filePath)
     }
+  }, [fs])
+
+  const handleRename = useCallback(async (oldPath, newPath) => {
+    await fs.renameFile(oldPath, newPath)
   }, [fs])
 
   const handleRefresh = useCallback(() => {
@@ -224,6 +280,7 @@ function Sidebar({ activePanel, onPanelChange, fs, onFileOpen }) {
                     onNewFile={handleNewFile}
                     onNewFolder={handleNewFolder}
                     onDelete={handleDelete}
+                    onRename={handleRename}
                   />
                 ))
               )}
@@ -323,6 +380,7 @@ function Sidebar({ activePanel, onPanelChange, fs, onFileOpen }) {
                   onNewFile={handleNewFile}
                   onNewFolder={handleNewFolder}
                   onDelete={handleDelete}
+                  onRename={handleRename}
                 />
               ))}
             </div>

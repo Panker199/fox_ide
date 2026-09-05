@@ -39,7 +39,7 @@ function CodeEditor({ onSelectionChange, fs }) {
 
   const handleCodeChange = useCallback((value) => {
     if (activeFile && fs) {
-      fs.fileContents[activeFile] = value
+      fs.updateFileContent(activeFile, value)
       setModifiedFiles(prev => ({ ...prev, [activeFile]: true }))
     }
   }, [activeFile, fs])

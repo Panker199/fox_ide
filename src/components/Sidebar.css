@@ -180,6 +180,18 @@
   white-space: nowrap;
 }
 
+.tree-rename-input {
+  flex: 1;
+  background: var(--k-bg-input, var(--k-bg-raised));
+  border: 1px solid var(--k-accent);
+  border-radius: 3px;
+  color: var(--k-text-normal);
+  font-size: 12px;
+  padding: 1px 4px;
+  outline: none;
+  font-family: inherit;
+}
+
 .tree-count {
   font-size: 10px;
   color: var(--k-text-ghost);
