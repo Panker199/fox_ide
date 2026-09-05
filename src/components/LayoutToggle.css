@@ -1,0 +1,30 @@
+.layout-toggle {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: var(--k-bg-float);
+  border: 1px solid var(--k-border-faint);
+  border-radius: 4px;
+}
+
+.layout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 22px;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--k-text-dim);
+}
+
+.layout-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--k-text-bright);
+}
+
+.layout-btn.active {
+  background: var(--k-accent);
+  color: white;
+}

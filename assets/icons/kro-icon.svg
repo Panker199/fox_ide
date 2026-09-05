@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <text x="256" y="320" text-anchor="middle" font-family="'Ubuntu Mono', monospace" font-size="200" font-weight="700" fill="#ffffff" letter-spacing="-10">K</text>
+  <rect x="80" y="380" width="352" height="8" rx="4" fill="#404040"/>
+  <circle cx="104" cy="384" r="8" fill="#ff5f56"/>
+  <circle cx="136" cy="384" r="8" fill="#ffbd2e"/>
+  <circle cx="168" cy="384" r="8" fill="#27c93f"/>
+</svg>

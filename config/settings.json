@@ -1,0 +1,87 @@
+{
+  "general": {
+    "autoSave": true,
+    "formatOnSave": true,
+    "formatOnPaste": false,
+    "trimAutoWhitespace": true,
+    "detectIndentation": true,
+    "insertSpaces": true,
+    "tabSize": 4,
+    "notifications": true,
+    "sound": true,
+    "zoomLevel": 1,
+    "language": "English"
+  },
+  "appearance": {
+    "colorTheme": "default-dark",
+    "iconTheme": "seti",
+    "fontFamily": "Ubuntu Mono",
+    "fontSize": 14,
+    "wordWrap": false,
+    "smoothScrolling": true,
+    "mouseWheelZoom": true,
+    "accentColor": "#0066cc",
+    "isDarkMode": true
+  },
+  "editor": {
+    "fontSize": 14,
+    "fontFamily": "Ubuntu Mono",
+    "lineNumbers": true,
+    "minimap": true,
+    "bracketMatching": true,
+    "autoCloseBrackets": true,
+    "intelliSense": true,
+    "quickSuggestions": true,
+    "parameterHints": true,
+    "tabCompletion": true,
+    "autoIndent": true,
+    "renderWhitespace": false,
+    "showIndentGuides": true,
+    "highlightActiveLine": true,
+    "highlightSelectedWord": true,
+    "codeFolding": true,
+    "colorizeBracketPairs": true,
+    "links": true,
+    "scrollPastEnd": false,
+    "cursorStyle": "line",
+    "cursorBlinking": true,
+    "renderLineHighlight": "all",
+    "multiCursorModifier": "ctrl"
+  },
+  "terminal": {
+    "shell": "powershell",
+    "fontSize": 14,
+    "fontFamily": "Ubuntu Mono",
+    "cursorStyle": "block",
+    "cursorBlinking": true,
+    "scrollback": 1000,
+    "bellStyle": "sound",
+    "enableBell": true,
+    "copyOnSelection": false,
+    "rightClickCopyPaste": true
+  },
+  "git": {
+    "enabled": true,
+    "autofetch": true,
+    "confirmSync": false,
+    "enableSmartCommit": false,
+    "decorationsEnabled": true,
+    "branchSorting": "asc"
+  },
+  "debug": {
+    "showInStatusbar": true,
+    "openExplorerOnBreak": true,
+    "allowBreakpointsEverywhere": false,
+    "inlineBreakpointThreshold": 3
+  },
+  "extensions": {
+    "autoUpdate": true,
+    "showRecommendations": true,
+    "ignoreRecommendations": false
+  },
+  "security": {
+    "telemetry": false,
+    "experimentalFeatures": false
+  },
+  "keybindings": {}
+}

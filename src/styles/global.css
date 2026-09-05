@@ -1,0 +1,467 @@
+/* ==========================================
+   KRO IDE — Global Styles
+   Based on kro-ide.html design
+   ========================================== */
+/* Animations removed */
+
+/* === Reset === */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*:not(.seti-icon):not(.seti-icon *)::before {
+  content: none !important;
+}
+
+*:not(.seti-icon):not(.seti-icon *)::after {
+  content: none !important;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--k-font);
+  background: var(--k-bg-void);
+  color: var(--k-text-normal);
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === App Shell === */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--k-bg-deep);
+}
+
+/* === App Body === */
+.app-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--k-bg-deep);
+}
+
+.main-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.editor-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--k-bg-deep);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--k-scroll);
+  border-radius: var(--k-r-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--k-scroll-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* === Selection === */
+::selection {
+  background: var(--k-selection);
+}
+
+/* === Inputs === */
+input:not([type="range"]), textarea, select {
+  font-family: var(--k-font);
+  background: var(--k-bg-input);
+  border: 1px solid var(--k-border-faint);
+  border-radius: var(--k-r-sm);
+  color: var(--k-text-normal);
+  padding: 6px 12px;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+input:not([type="range"]):hover, textarea:hover, select:hover {
+  border-color: var(--k-border-dim);
+}
+
+input:not([type="range"]):focus, textarea:focus, select:focus {
+  border-color: var(--k-border-focus);
+}
+
+input:not([type="range"])::placeholder, textarea::placeholder {
+  color: var(--k-text-ghost);
+}
+
+/* === Buttons === */
+button {
+  font-family: var(--k-font);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* === Bottom Panel === */
+.bottom-panel {
+  display: flex;
+  flex-direction: column;
+  height: 240px;
+  border-top: 1px solid var(--k-border-ghost);
+  background: var(--k-bg-surface);
+  position: relative;
+}
+
+.panel-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--k-bg-surface);
+  border-bottom: 1px solid var(--k-border-ghost);
+  padding: 0 4px;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.panel-tabs-left {
+  display: flex;
+  align-items: center;
+}
+
+.panel-tabs-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: var(--k-text-ghost);
+  cursor: pointer;
+  border-radius: var(--k-r-sm);
+  transition: all 0.15s ease;
+}
+
+.panel-tabs-close:hover {
+  background: var(--k-bg-hover);
+  color: var(--k-text-primary);
+}
+
+.panel-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--k-text-ghost);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  position: relative;
+  border-radius: var(--k-r-sm) var(--k-r-sm) 0 0;
+}
+
+.panel-tab:hover {
+  color: var(--k-text-dim);
+}
+
+.panel-tab.active {
+  color: var(--k-text-normal);
+  border-bottom-color: var(--k-accent);
+}
+
+.panel-tab svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.panel-tab-count {
+  font-size: 10px;
+  min-width: 18px;
+  height: 16px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--k-accent-ghost);
+  color: var(--k-accent);
+  border-radius: var(--k-r-pill);
+  font-weight: 600;
+}
+
+.panel-tab-count.warning {
+  background: var(--k-amber-bg);
+  color: var(--k-amber);
+}
+
+.panel-tab-count.error {
+  background: var(--k-red-bg);
+  color: var(--k-red);
+}
+
+.panel-tab-spacer {
+  flex: 1;
+}
+
+.panel-tab-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  padding-right: 8px;
+}
+
+.panel-tab-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--k-text-ghost);
+}
+
+.panel-tab-actions button:hover {
+  background: var(--k-bg-raised);
+  color: var(--k-text-normal);
+}
+
+.panel-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--k-text-ghost);
+  font-size: 14px;
+}
+
+.panel-close:hover {
+  background: var(--k-bg-raised);
+  color: var(--k-text-normal);
+}
+
+.panel-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* === Copilot Sidebar === */
+.copilot-sidebar {
+  width: 420px;
+  min-width: 420px;
+  height: 100%;
+  border-left: 1px solid var(--k-border-ghost);
+  background: var(--k-bg-surface);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+/* === Layout: Default === */
+.layout-default .app-body {
+  flex-direction: row;
+}
+.layout-default .main-layout {
+  flex-direction: row;
+}
+.layout-default .sidebar {
+  width: 260px;
+  min-width: 200px;
+  border-right: 1px solid var(--k-border-ghost);
+}
+.layout-default .copilot-sidebar {
+  width: 420px;
+  min-width: 420px;
+}
+
+/* === Layout: Centered === */
+.layout-centered .app-body {
+  flex-direction: row;
+}
+.layout-centered .main-layout {
+  flex-direction: row;
+  justify-content: center;
+}
+.layout-centered .editor-area {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.layout-centered .sidebar {
+  width: 220px;
+  min-width: 180px;
+  border-right: 1px solid var(--k-border-ghost);
+}
+.layout-centered .copilot-sidebar {
+  width: 380px;
+  min-width: 380px;
+}
+
+/* === Layout: Wide === */
+.layout-wide .app-body {
+  flex-direction: row;
+}
+.layout-wide .main-layout {
+  flex-direction: row;
+}
+.layout-wide .editor-area {
+  flex: 1;
+}
+.layout-wide .sidebar {
+  width: 220px;
+  min-width: 180px;
+  border-right: 1px solid var(--k-border-ghost);
+}
+.layout-wide .bottom-panel {
+  height: 150px;
+}
+.layout-wide .copilot-sidebar {
+  width: 460px;
+  min-width: 460px;
+}
+
+/* === Layout: Compact === */
+.layout-compact .app-body {
+  flex-direction: row;
+}
+.layout-compact .main-layout {
+  flex-direction: row;
+}
+.layout-compact .sidebar {
+  width: 180px;
+  min-width: 140px;
+  border-right: 1px solid var(--k-border-ghost);
+}
+.layout-compact .bottom-panel {
+  height: 120px;
+}
+.layout-compact .copilot-sidebar {
+  width: 340px;
+  min-width: 340px;
+}
+
+/* === Layout: Split === */
+.layout-split .app-body {
+  flex-direction: row;
+}
+.layout-split .main-layout {
+  flex-direction: row;
+}
+.layout-split .sidebar {
+  width: 220px;
+  min-width: 180px;
+  border-right: 1px solid var(--k-border-ghost);
+}
+.layout-split .editor-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.layout-split .content-area {
+  display: flex;
+  flex-direction: row;
+}
+.layout-split .content-area > * {
+  flex: 1;
+  min-width: 0;
+}
+.layout-split .copilot-sidebar {
+  width: 420px;
+  min-width: 420px;
+}
+
+/* === Layout: Zen === */
+.layout-zen .app-body {
+  flex-direction: row;
+}
+.layout-zen .main-layout {
+  flex-direction: row;
+}
+.layout-zen .sidebar {
+  display: none;
+}
+.layout-zen .bottom-panel {
+  display: none;
+}
+.layout-zen .copilot-sidebar {
+  display: none;
+}
+.layout-zen .activity-bar {
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+}
+.layout-zen .activity-bar:hover {
+  opacity: 1;
+}
+.layout-zen .status-bar {
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+}
+.layout-zen .status-bar:hover {
+  opacity: 1;
+}
+.layout-zen .editor-area {
+  flex: 1;
+}
+.layout-zen .content-area {
+  background: var(--k-bg-void);
+}

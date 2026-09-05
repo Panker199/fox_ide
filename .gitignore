@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.txt
+.DS_Store
+assets/extensions/
+assets/svg/
+assets/fonts/
+assets/images/
+check-imports.js
+copilot/

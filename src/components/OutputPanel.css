@@ -1,0 +1,129 @@
+.output-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--k-bg-void);
+}
+
+.output-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--k-border-ghost);
+  background: var(--k-bg-surface);
+  flex-shrink: 0;
+}
+
+.output-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.output-filter-group {
+  display: flex;
+  gap: 2px;
+}
+
+.output-filter-btn {
+  padding: 3px 8px;
+  border: none;
+  background: transparent;
+  color: var(--k-text-ghost);
+  font-size: 11px;
+  font-family: inherit;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.output-filter-btn:hover {
+  background: var(--k-bg-raised);
+  color: var(--k-text-normal);
+}
+
+.output-filter-btn.active {
+  background: var(--k-accent-ghost);
+  color: var(--k-accent);
+}
+
+.output-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.output-tool-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: var(--k-text-ghost);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.output-tool-btn:hover {
+  background: var(--k-bg-raised);
+  color: var(--k-text-normal);
+}
+
+.output-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+  font-family: var(--k-font-code, monospace);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.output-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  color: var(--k-text-ghost);
+  font-family: var(--k-font);
+  font-size: 12px;
+}
+
+.output-line {
+  display: flex;
+  gap: 8px;
+  padding: 1px 12px;
+  white-space: nowrap;
+}
+
+.output-line:hover {
+  background: var(--k-bg-raised);
+}
+
+.output-time {
+  color: var(--k-text-ghost);
+  flex-shrink: 0;
+}
+
+.output-source {
+  color: var(--k-text-dim);
+  flex-shrink: 0;
+}
+
+.output-msg {
+  color: var(--k-text-normal);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.output-line.warn .output-msg {
+  color: #d29922;
+}
+
+.output-line.error .output-msg {
+  color: #f85149;
+}
