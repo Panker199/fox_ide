@@ -259,6 +259,7 @@ function Dropdown({ label, value, options, onChange }) {
 
 function SettingsPanel({ onBack, onNavigate }) {
   const [activeSection, setActiveSection] = useState('general')
+  const [navSearch, setNavSearch] = useState('')
   const { settings, saving, saved, updateSetting, updateSettings, resetSettings, getSetting } = useSettings()
 
   const handleThemeChange = useCallback((themeId, themeType) => {
@@ -3137,23 +3138,38 @@ function SettingsPanel({ onBack, onNavigate }) {
         </div>
       </div>
 
-      <div className="settings-tabs-scroll">
-        <div className="settings-tabs">
-          {settingsSections.map(section => (
-            <button
-              key={section.id}
-              className={`settings-tab ${activeSection === section.id ? 'active' : ''}`}
-              onClick={() => setActiveSection(section.id)}
-            >
-              <section.icon size={14} />
-              <span>{section.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <div className="settings-body">
+        <nav className="settings-nav">
+          <div className="settings-search">
+            <Search size={14} className="settings-search-icon" />
+            <input
+              type="text"
+              className="settings-search-input"
+              placeholder="Search..."
+              value={navSearch}
+              onChange={(e) => setNavSearch(e.target.value)}
+            />
+          </div>
+          <div className="settings-nav-list">
+            {settingsSections
+              .filter(s => s.label.toLowerCase().includes(navSearch.toLowerCase()))
+              .map(section => (
+                <button
+                  key={section.id}
+                  className={`nav-item ${activeSection === section.id ? 'active' : ''}`}
+                  onClick={() => setActiveSection(section.id)}
+                >
+                  <section.icon size={16} />
+                  <span>{section.label}</span>
+                </button>
+              ))
+            }
+          </div>
+        </nav>
 
-      <div className="settings-main">
-        {renderContent()}
+        <div className="settings-main">
+          {renderContent()}
+        </div>
       </div>
     </div>
   )
