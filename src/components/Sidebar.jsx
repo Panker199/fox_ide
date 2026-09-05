@@ -208,7 +208,7 @@ function Sidebar({ activePanel, onPanelChange, fs, onFileOpen }) {
               ) : fs.error ? (
                 <div className="tree-error">
                   <span>Server not connected</span>
-                  <button onClick={handleRefresh}>Retry</button>
+                  <button onClick={() => { handleRefresh(); setTimeout(handleRefresh, 2000) }}>Retry</button>
                 </div>
               ) : fs.tree.length === 0 ? (
                 <div className="tree-empty">No files found</div>
