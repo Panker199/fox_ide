@@ -11,7 +11,7 @@ const ROOT = path.resolve(process.env.FOX_ROOT || __dirname)
 app.use(cors())
 app.use(express.json({ limit: '10mb' }))
 
-const IGNORE = ['node_modules', '.git', 'dist', '.next', '.nuxt', '.cache', '.vite', 'out']
+const IGNORE = ['node_modules', '.git', 'dist', '.next', '.nuxt', '.cache', '.vite', 'out', '.vs', 'build', 'coverage', '__pycache__', '.DS_Store']
 
 function safePath(filePath) {
   const full = path.resolve(ROOT, filePath)
@@ -19,7 +19,7 @@ function safePath(filePath) {
   return full
 }
 
-function buildTree(dirPath, depth = 0, maxDepth = 20) {
+function buildTree(dirPath, depth = 0, maxDepth = 5) {
   if (depth > maxDepth) return []
   const entries = []
   try {

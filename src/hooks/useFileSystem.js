@@ -2,6 +2,12 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 
 const API = '/api'
 
+function fetchWithTimeout(url, options = {}, timeout = 5000) {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), timeout)
+  return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer))
+}
+
 export function useFileSystem() {
   const [tree, setTree] = useState([])
   const [loading, setLoading] = useState(true)
@@ -12,21 +18,26 @@ export function useFileSystem() {
   const [fileContents, setFileContents] = useState({})
   const fileContentsRef = useRef(fileContents)
   fileContentsRef.current = fileContents
+  const retryRef = useRef(null)
 
   const fetchTree = useCallback(async () => {
     try {
       setLoading(true)
-      const res = await fetch(`${API}/tree`)
+      const res = await fetchWithTimeout(`${API}/tree`)
       if (!res.ok) throw new Error(`Server error ${res.status}`)
       const data = await res.json()
       if (Array.isArray(data)) {
         setTree(data)
         setError(null)
+        if (retryRef.current) { clearInterval(retryRef.current); retryRef.current = null }
       } else {
         throw new Error(data.error || 'Invalid response')
       }
     } catch (e) {
       setError(e.message)
+      if (!retryRef.current) {
+        retryRef.current = setInterval(() => fetchTree(), 3000)
+      }
     } finally {
       setLoading(false)
     }
@@ -36,7 +47,7 @@ export function useFileSystem() {
     const cached = fileContentsRef.current[filePath]
     if (cached !== undefined) return cached
     try {
-      const res = await fetch(`${API}/file?path=${encodeURIComponent(filePath)}`)
+      const res = await fetchWithTimeout(`${API}/file?path=${encodeURIComponent(filePath)}`)
       if (!res.ok) throw new Error(`Failed to read file`)
       const data = await res.json()
       if (data.content !== undefined) {
@@ -55,7 +66,7 @@ export function useFileSystem() {
 
   const saveFile = useCallback(async (filePath, content) => {
     try {
-      const res = await fetch(`${API}/file`, {
+      const res = await fetchWithTimeout(`${API}/file`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filePath, content }),
@@ -101,7 +112,7 @@ export function useFileSystem() {
 
   const createFile = useCallback(async (filePath) => {
     try {
-      const res = await fetch(`${API}/file/new`, {
+      const res = await fetchWithTimeout(`${API}/file/new`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filePath }),
@@ -116,7 +127,7 @@ export function useFileSystem() {
 
   const deleteFile = useCallback(async (filePath) => {
     try {
-      const res = await fetch(`${API}/file?path=${encodeURIComponent(filePath)}`, { method: 'DELETE' })
+      const res = await fetchWithTimeout(`${API}/file?path=${encodeURIComponent(filePath)}`, { method: 'DELETE' })
       if (!res.ok) throw new Error('Failed to delete')
       closeFile(filePath)
       await fetchTree()
@@ -128,7 +139,7 @@ export function useFileSystem() {
 
   const createFolder = useCallback(async (folderPath) => {
     try {
-      const res = await fetch(`${API}/folder/new`, {
+      const res = await fetchWithTimeout(`${API}/folder/new`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ folderPath }),
@@ -143,7 +154,7 @@ export function useFileSystem() {
 
   const renameFile = useCallback(async (oldPath, newPath) => {
     try {
-      const res = await fetch(`${API}/rename`, {
+      const res = await fetchWithTimeout(`${API}/rename`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ oldPath, newPath }),
@@ -168,7 +179,7 @@ export function useFileSystem() {
 
   const fetchGitStatus = useCallback(async () => {
     try {
-      const res = await fetch(`${API}/git/status`)
+      const res = await fetchWithTimeout(`${API}/git/status`, {}, 3000)
       const data = await res.json()
       setGitStatus(data)
     } catch (e) {}
@@ -177,7 +188,7 @@ export function useFileSystem() {
   const searchFiles = useCallback(async (query) => {
     if (!query) return []
     try {
-      const res = await fetch(`${API}/tree`)
+      const res = await fetchWithTimeout(`${API}/tree`)
       if (!res.ok) return []
       const data = await res.json()
       if (!Array.isArray(data)) return []
@@ -201,7 +212,10 @@ export function useFileSystem() {
     fetchTree()
     fetchGitStatus()
     const interval = setInterval(fetchGitStatus, 30000)
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      if (retryRef.current) { clearInterval(retryRef.current); retryRef.current = null }
+    }
   }, [fetchTree, fetchGitStatus])
 
   return {
