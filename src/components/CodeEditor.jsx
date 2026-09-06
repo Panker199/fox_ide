@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import MonacoEditor from './MonacoEditor/MonacoEditor'
+import { useSettings } from '../hooks/useSettings'
 import {
   FileCode,
   Plus,
@@ -30,12 +31,15 @@ function detectLanguage(filePath) {
 function CodeEditor({ onSelectionChange, fs }) {
   const [modifiedFiles, setModifiedFiles] = useState({})
   const [showLangMenu, setShowLangMenu] = useState(false)
+  const { settings } = useSettings()
 
   const openFiles = fs?.openFiles || []
   const activeFile = fs?.activeFile || null
   const fileContents = fs?.fileContents || {}
-
   const currentContent = activeFile ? (fileContents[activeFile] ?? '') : ''
+
+  const editorFontSize = settings?.editor?.fontSize || settings?.appearance?.fontSize || 14
+  const editorFontFamily = settings?.appearance?.fontFamily || "'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace"
 
   const handleCodeChange = useCallback((value) => {
     if (activeFile && fs) {
@@ -156,6 +160,8 @@ function CodeEditor({ onSelectionChange, fs }) {
           fileName={getFileName(activeFile)}
           height="100%"
           onMount={handleEditorMount}
+          fontSize={editorFontSize}
+          fontFamily={editorFontFamily}
         />
       </div>
     </div>
